@@ -12,8 +12,8 @@ UCLASS()
 class ALITTLEDEATH_API AALittleDeathGameMode : public AGameMode
 {
 	GENERATED_BODY()
-	
-	
+
+		AALittleDeathGameMode();
 	
 	
 };
