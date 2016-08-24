@@ -48,5 +48,7 @@ public:
 		class ALDTile* CurrentTile;
 
 	void UpdateCurrentTile(class ALDTile* Tile);
+
+	void MoveInDirection(FVector MoveDirection, float DeltaTime);
 	
 };

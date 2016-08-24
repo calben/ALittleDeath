@@ -1,7 +1,9 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "ALittleDeath.h"
+#include "Environment/LDArena.h"
 #include "Player/LDBasePawn.h"
+#include "Player/LDPlagueCarrierPawn.h"
 #include "LDTile.h"
 
 
@@ -22,9 +24,10 @@ ALDTile::ALDTile()
 	this->SetActorScale3D(FVector::FVector(0.95f, 0.95f, 0.1f));
 
 	Collision = CreateDefaultSubobject<UBoxComponent>(TEXT("Collision"));
-	Collision->SetBoxExtent(FVector::FVector(50.f, 50.f, 1000.f));
+	Collision->SetBoxExtent(FVector::FVector(50.f, 50.f, 2000.f));
 	Collision->SetRelativeLocation(FVector::FVector(0.f, 0.f, 300.f));
 	Collision->bGenerateOverlapEvents = true;
+	Collision->SetCollisionObjectType(ECollisionChannel::ECC_Pawn);
 	Collision->OnComponentBeginOverlap.AddDynamic(this, &ALDTile::TriggerEnter);
 	Collision->OnComponentEndOverlap.AddDynamic(this, &ALDTile::TriggerExit);
 	Collision->SetupAttachment(Mesh);
@@ -50,11 +53,15 @@ void ALDTile::Tick( float DeltaTime )
 
 void ALDTile::TriggerEnter(class UPrimitiveComponent* HitComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult)
 {
-	UE_LOG(LogTemp, Warning, TEXT("ENTERED"));
 	ALDBasePawn* BasePawn = Cast<ALDBasePawn>(OtherActor);
 	if (BasePawn)
 	{
 		BasePawn->UpdateCurrentTile(this);
+	}
+
+	ALDPlagueCarrierPawn* PlagueCarrierPawn = Cast<ALDPlagueCarrierPawn>(OtherActor);
+	if (PlagueCarrierPawn)
+	{
 		this->SetTileDamaging(true);
 	}
 }
@@ -76,4 +83,9 @@ void ALDTile::SetTileDamaging(bool ShouldDamage, float DPS)
 	{
 
 	}
+}
+
+TArray<ALDTile*> ALDTile::GetAdjacentTiles()
+{
+	return Arena->GetTilesAdjacentTo(this);
 }

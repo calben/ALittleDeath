@@ -33,5 +33,7 @@ public:
 		UMaterial* TileMaterialB;
 
 	void SpawnBoardTiles();
+
+	TArray<class ALDTile*> GetTilesAdjacentTo(class ALDTile* Tile);
 	
 };

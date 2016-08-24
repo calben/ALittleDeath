@@ -32,7 +32,7 @@ ALDBasePawn::ALDBasePawn()
 	SpringArm = CreateDefaultSubobject<USpringArmComponent>(TEXT("SpringArm"));
 	SpringArm->bDoCollisionTest = true;
 	SpringArm->bAbsoluteRotation = true;
-	SpringArm->RelativeRotation = FRotator(-70.f, 0.f, 0.f);
+	SpringArm->RelativeRotation = FRotator(-80.f, 0.f, 0.f);
 	SpringArm->TargetArmLength = 700.f;
 
 	Camera = CreateDefaultSubobject<UCameraComponent>(TEXT("Camera"));
@@ -58,7 +58,11 @@ void ALDBasePawn::Tick( float DeltaTime )
 	const float RightValue = GetInputAxisValue("MoveRight");
 
 	const FVector MoveDirection = FVector(ForwardValue, RightValue, 0.f).GetClampedToMaxSize(1.0f);
+	MoveInDirection(MoveDirection, DeltaTime);
+}
 
+void ALDBasePawn::MoveInDirection(FVector MoveDirection, float DeltaTime)
+{
 	const FVector Movement = MoveDirection * MoveSpeed * DeltaTime;
 
 	if (Movement.SizeSquared() > 0.1f)

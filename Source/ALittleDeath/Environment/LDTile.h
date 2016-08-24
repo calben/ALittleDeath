@@ -40,7 +40,16 @@ public:
 		bool bTileDamaging;
 
 	UPROPERTY(EditAnywhere)
+		class ALDArena* Arena;
+
+	UPROPERTY(EditAnywhere)
 		float TileDamagePerSecond = 99999999.0f;
+
+	UPROPERTY(EditAnywhere)
+		int ArenaX;
+
+	UPROPERTY(EditAnywhere)
+		int ArenaY;
 
 	UFUNCTION()
 		void TriggerEnter(class UPrimitiveComponent* HitComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult);
@@ -49,4 +58,6 @@ public:
 		void TriggerExit(class UPrimitiveComponent* HitComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
 
 	void SetTileDamaging(bool ShouldDamage, float DPS = 999999999.0f);
+
+	TArray<ALDTile*> GetAdjacentTiles();
 };
