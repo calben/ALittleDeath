@@ -33,7 +33,7 @@ ALDBasePawn::ALDBasePawn()
 	SpringArm->bDoCollisionTest = true;
 	SpringArm->bAbsoluteRotation = true;
 	SpringArm->RelativeRotation = FRotator(-80.f, 0.f, 0.f);
-	SpringArm->TargetArmLength = 700.f;
+	SpringArm->TargetArmLength = 800.f;
 
 	Camera = CreateDefaultSubobject<UCameraComponent>(TEXT("Camera"));
 	Camera->bUsePawnControlRotation = false;

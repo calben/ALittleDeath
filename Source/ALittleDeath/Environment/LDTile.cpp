@@ -3,6 +3,7 @@
 #include "ALittleDeath.h"
 #include "Environment/LDArena.h"
 #include "Player/LDBasePawn.h"
+#include "Player/LDPlayerPawn.h"
 #include "Player/LDPlagueCarrierPawn.h"
 #include "LDTile.h"
 
@@ -10,7 +11,7 @@
 // Sets default values
 ALDTile::ALDTile()
 {
- 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
+	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
 	Mesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Mesh"));
@@ -40,13 +41,13 @@ ALDTile::ALDTile()
 void ALDTile::BeginPlay()
 {
 	Super::BeginPlay();
-	
+
 }
 
 // Called every frame
-void ALDTile::Tick( float DeltaTime )
+void ALDTile::Tick(float DeltaTime)
 {
-	Super::Tick( DeltaTime );
+	Super::Tick(DeltaTime);
 
 }
 
@@ -56,13 +57,25 @@ void ALDTile::TriggerEnter(class UPrimitiveComponent* HitComp, class AActor* Oth
 	ALDBasePawn* BasePawn = Cast<ALDBasePawn>(OtherActor);
 	if (BasePawn)
 	{
+		UE_LOG(LogTemp, Warning, TEXT("TILE %s ENTERED BY PLAYER %s"), *this->GetName(), *BasePawn->GetName())
 		BasePawn->UpdateCurrentTile(this);
 	}
 
 	ALDPlagueCarrierPawn* PlagueCarrierPawn = Cast<ALDPlagueCarrierPawn>(OtherActor);
 	if (PlagueCarrierPawn)
 	{
+		UE_LOG(LogTemp, Warning, TEXT("TILE %s MADE DAMAGING BY PLAYER %s"), *this->GetName(), *PlagueCarrierPawn->GetName())
 		this->SetTileDamaging(true);
+	}
+
+	ALDPlayerPawn* PlayerPawn = Cast<ALDPlayerPawn>(OtherActor);
+	if (PlayerPawn)
+	{
+		if (bTileDamaging)
+		{
+			UE_LOG(LogTemp, Warning, TEXT("TILE %s DESTROYING PLAYER %s"), *this->GetName(), *PlayerPawn->GetName())
+			PlayerPawn->Destroy();
+		}
 	}
 }
 
@@ -81,7 +94,9 @@ void ALDTile::SetTileDamaging(bool ShouldDamage, float DPS)
 	}
 	else
 	{
-
+		this->Mesh->SetMaterial(0, nullptr);
+		this->bTileDamaging = false;
+		this->TileDamagePerSecond = DPS;
 	}
 }
 

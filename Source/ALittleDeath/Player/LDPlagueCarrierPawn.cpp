@@ -23,11 +23,10 @@ void ALDPlagueCarrierPawn::Tick(float DeltaTime)
 		{
 			FVector tmp_location = TargetTile->GetActorLocation();
 			tmp_location.Z = this->GetActorLocation().Z;
-			if (FVector::Dist(this->GetActorLocation(), tmp_location) < 1.0f)
+			if (FVector::Dist(this->GetActorLocation(), tmp_location) < 5.0f)
 				ChooseNewTarget();
 			FVector MoveDirection = TargetTile->GetActorLocation() - GetActorLocation();
 			MoveDirection.Z = 0;
-			UE_LOG(LogTemp, Warning, TEXT("MOVING TO %s"), *MoveDirection.ToString())
 			MoveInDirection(MoveDirection.GetClampedToMaxSize(1.0f), DeltaTime);
 		}
 		else {
