@@ -13,6 +13,8 @@ class ALITTLEDEATH_API ALDPlagueCarrierPawn : public ALDBasePawn
 {
 	GENERATED_BODY()
 
+public:
+
 		ALDPlagueCarrierPawn();
 
 	UPROPERTY(EditAnywhere)
@@ -24,4 +26,6 @@ class ALITTLEDEATH_API ALDPlagueCarrierPawn : public ALDBasePawn
 	virtual void Tick(float DeltaSeconds) override;
 
 	void ChooseNewTarget();
+
+	void Die() override;
 };

@@ -69,7 +69,7 @@ TArray<ALDTile*> ALDArena::GetTilesAdjacentTo(ALDTile* Tile)
 	TArray<ALDTile*> result;
 	for (ALDTile* t : Tiles)
 	{
-		if (FVector::Dist(t->GetActorLocation(), Tile->GetActorLocation()) < 102.f)
+		if (FVector::Dist(t->GetActorLocation(), Tile->GetActorLocation()) < 101.f)
 			result.Add(t);
 	}
 	return result;

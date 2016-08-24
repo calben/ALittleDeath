@@ -2,6 +2,7 @@
 
 #include "ALittleDeath.h"
 #include "Environment/LDTile.h"
+#include "Environment/PawnSpawningArea.h"
 #include "LDPlagueCarrierPawn.h"
 
 ALDPlagueCarrierPawn::ALDPlagueCarrierPawn()
@@ -48,8 +49,18 @@ void ALDPlagueCarrierPawn::ChooseNewTarget()
 	}
 	if (CandidateTiles.Num() == 0)
 	{
-		Destroy();
-		return;
+		Die();
 	}
 	TargetTile = CandidateTiles[FMath::FloorToInt(FMath::FRandRange(0, CandidateTiles.Num()))];
+}
+
+void ALDPlagueCarrierPawn::Die()
+{
+	if (this->SpawnPoint)
+	{
+		SpawnPoint->SpawnedPawns.Remove(this);
+	}
+	Destroy();
+	return;
+
 }

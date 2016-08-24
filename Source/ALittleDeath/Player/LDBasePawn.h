@@ -36,6 +36,9 @@ public:
 		class UPointLightComponent* Light;
 
 	UPROPERTY(EditAnywhere)
+		UArrowComponent* Arrow;
+
+	UPROPERTY(EditAnywhere)
 		float MoveSpeed = 250.0f;
 
 	UPROPERTY(EditAnywhere)
@@ -47,8 +50,19 @@ public:
 	UPROPERTY(EditAnywhere)
 		class ALDTile* CurrentTile;
 
+	UPROPERTY(EditAnywhere)
+		class APawnSpawningArea* SpawnPoint = nullptr;
+
+	UPROPERTY(EditAnywhere)
+		float ActionDelay = .5f;
+
+	float tmp_actiontimer;
+
 	void UpdateCurrentTile(class ALDTile* Tile);
 
-	void MoveInDirection(FVector MoveDirection, float DeltaTime);
-	
+	void MoveInDirection(FVector Direction, float DeltaTime);
+
+	void FireProjectileInDirection(FVector Direction);
+
+	void Die();
 };
