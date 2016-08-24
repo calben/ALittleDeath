@@ -64,5 +64,5 @@ public:
 
 	void FireProjectileInDirection(FVector Direction);
 
-	void Die();
+	virtual void Die();
 };
