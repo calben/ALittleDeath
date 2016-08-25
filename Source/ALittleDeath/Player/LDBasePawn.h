@@ -64,5 +64,7 @@ public:
 
 	void FireProjectileInDirection(FVector Direction);
 
+	virtual void DoPrimaryAction();
+
 	virtual void Die();
 };

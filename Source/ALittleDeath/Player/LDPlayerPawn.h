@@ -12,8 +12,8 @@ UCLASS()
 class ALITTLEDEATH_API ALDPlayerPawn : public ALDBasePawn
 {
 	GENERATED_BODY()
+
+		virtual void DoPrimaryAction() override;
 	
-	
-	
-	
+	virtual void Tick(float DeltaTime) override;
 };

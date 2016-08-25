@@ -110,6 +110,16 @@ void ALDBasePawn::Die()
 	this->Destroy();
 }
 
+void ALDBasePawn::DoPrimaryAction()
+{
+
+}
+
+void ALDBasePawn::EndPrimaryAction()
+{
+
+}
+
 // Called to bind functionality to input
 void ALDBasePawn::SetupPlayerInputComponent(class UInputComponent* InputComponent)
 {
@@ -118,5 +128,6 @@ void ALDBasePawn::SetupPlayerInputComponent(class UInputComponent* InputComponen
 	InputComponent->BindAxis("MoveRight");
 	InputComponent->BindAxis("LookForward");
 	InputComponent->BindAxis("LookRight");
+	InputComponent->BindAction("PrimaryAction", IE_Pressed, this, &ALDBasePawn::DoPrimaryAction);
 }
 
