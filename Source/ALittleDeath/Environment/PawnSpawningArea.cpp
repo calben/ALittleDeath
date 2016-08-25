@@ -3,6 +3,7 @@
 #include "ALittleDeath.h"
 #include "Player/LDBasePawn.h"
 #include "Player/LDPlagueCarrierPawn.h"
+#include "Kismet/KismetMathLibrary.h"
 #include "PawnSpawningArea.h"
 
 
@@ -30,15 +31,23 @@ void APawnSpawningArea::Tick( float DeltaTime )
 	{
 		if (tmp_timer >= SpawnDelay)
 		{
-			ALDBasePawn* BasePawn = GetWorld()->SpawnActor<ALDBasePawn>(Pawn, GetActorLocation(), FRotator(0, 0, 0));
-			BasePawn->SpawnPoint = this;
-			ALDPlagueCarrierPawn* PlagueCarrierPawn = Cast<ALDPlagueCarrierPawn>(BasePawn);
-			if (PlagueCarrierPawn)
+			FVector Origin;
+			FVector BoundsExtent;
+			this->GetActorBounds(false, Origin, BoundsExtent);
+			FVector SpawnLocation = UKismetMathLibrary::RandomPointInBoundingBox(Origin, BoundsExtent);
+			SpawnLocation.Z = 50.0f;
+			ALDBasePawn* BasePawn = GetWorld()->SpawnActor<ALDBasePawn>(Pawn, SpawnLocation, FRotator(0, 0, 0));
+			if (BasePawn)
 			{
-				PlagueCarrierPawn->bUseHeuristicAI = true;
-				PlagueCarrierPawn->MoveSpeed = 100;
+				BasePawn->SpawnPoint = this;
+				ALDPlagueCarrierPawn* PlagueCarrierPawn = Cast<ALDPlagueCarrierPawn>(BasePawn);
+				if (PlagueCarrierPawn)
+				{
+					PlagueCarrierPawn->bUseHeuristicAI = true;
+					PlagueCarrierPawn->MoveSpeed = 100;
+				}
+				SpawnedPawns.Add(BasePawn);
 			}
-			SpawnedPawns.Add(BasePawn);
 			tmp_timer = 0.f;
 		}
 		else

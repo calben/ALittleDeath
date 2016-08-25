@@ -61,16 +61,11 @@ void ALDProjectile::TriggerEnter(class UPrimitiveComponent* HitComp, class AActo
 	ALDBasePawn* BasePawn = Cast<ALDBasePawn>(OtherActor);
 	if (BasePawn)
 	{
-		BasePawn->Destroy();
-	}
-
-	ALDPlagueCarrierPawn* PlagueCarrierPawn = Cast<ALDPlagueCarrierPawn>(OtherActor);
-	if (PlagueCarrierPawn)
-	{
+		BasePawn->Die();
 	}
 }
 
-void ALDProjectile::TriggerExit(class UPrimitiveComponent* HitComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
+void ALDProjectile::TriggerExit(class UPrimitiveComponent* HitComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtsherBodyIndex)
 {
 
 }

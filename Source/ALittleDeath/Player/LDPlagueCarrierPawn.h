@@ -27,5 +27,5 @@ public:
 
 	void ChooseNewTarget();
 
-	void Die() override;
+	virtual void Die() override;
 };

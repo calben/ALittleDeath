@@ -50,12 +50,14 @@ void ALDPlagueCarrierPawn::ChooseNewTarget()
 	if (CandidateTiles.Num() == 0)
 	{
 		Die();
+		return;
 	}
 	TargetTile = CandidateTiles[FMath::FloorToInt(FMath::FRandRange(0, CandidateTiles.Num()))];
 }
 
 void ALDPlagueCarrierPawn::Die()
 {
+	UE_LOG(LogTemp, Warning, TEXT("KILLING PLAGUE CARRIER"))
 	if (this->SpawnPoint)
 	{
 		SpawnPoint->SpawnedPawns.Remove(this);
