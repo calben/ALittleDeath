@@ -36,19 +36,26 @@ void APawnSpawningArea::Tick( float DeltaTime )
 			this->GetActorBounds(false, Origin, BoundsExtent);
 			FVector SpawnLocation = UKismetMathLibrary::RandomPointInBoundingBox(Origin, BoundsExtent);
 			SpawnLocation.Z = 50.0f;
-			ALDBasePawn* BasePawn = GetWorld()->SpawnActor<ALDBasePawn>(Pawn, SpawnLocation, FRotator(0, 0, 0));
-			if (BasePawn)
+			bool location_good = true;
+			for (FConstPlayerControllerIterator Iterator = GetWorld()->GetPlayerControllerIterator(); Iterator; ++Iterator)
+				if (FVector::Dist(SpawnLocation, Iterator->Get()->GetControlledPawn()->GetActorLocation()) < 300.0f)
+					location_good = false;
+			if (location_good)
 			{
-				BasePawn->SpawnPoint = this;
-				ALDPlagueCarrierPawn* PlagueCarrierPawn = Cast<ALDPlagueCarrierPawn>(BasePawn);
-				if (PlagueCarrierPawn)
+				ALDBasePawn* BasePawn = GetWorld()->SpawnActor<ALDBasePawn>(Pawn, SpawnLocation, FRotator(0, 0, 0));
+				if (BasePawn)
 				{
-					PlagueCarrierPawn->bUseHeuristicAI = true;
-					PlagueCarrierPawn->MoveSpeed = 100;
+					BasePawn->SpawnPoint = this;
+					ALDPlagueCarrierPawn* PlagueCarrierPawn = Cast<ALDPlagueCarrierPawn>(BasePawn);
+					if (PlagueCarrierPawn)
+					{
+						PlagueCarrierPawn->bUseHeuristicAI = true;
+						PlagueCarrierPawn->MoveSpeed = 100;
+					}
+					SpawnedPawns.Add(BasePawn);
 				}
-				SpawnedPawns.Add(BasePawn);
+				tmp_timer = 0.f;
 			}
-			tmp_timer = 0.f;
 		}
 		else
 		{

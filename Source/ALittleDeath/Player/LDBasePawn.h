@@ -54,7 +54,7 @@ public:
 		class APawnSpawningArea* SpawnPoint = nullptr;
 
 	UPROPERTY(EditAnywhere)
-		float ActionDelay = .5f;
+		float ActionDelay = .2f;
 
 	float tmp_actiontimer;
 

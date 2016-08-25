@@ -69,7 +69,7 @@ void ALDBasePawn::Tick(float DeltaTime)
 	const float LookRightValue = GetInputAxisValue("LookRight");
 	const FVector LookDirection = FVector(LookForwardValue, LookRightValue, 0.f).GetClampedToMaxSize(1.0f);
 	if (LookDirection.SizeSquared() > 0.1f && tmp_actiontimer >= ActionDelay) {
-		FireProjectileInDirection(LookDirection);
+		FireProjectileInDirection(LookDirection/LookDirection.Size());
 		tmp_actiontimer = 0.f;
 	}
 	tmp_actiontimer += DeltaTime;

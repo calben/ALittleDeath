@@ -26,8 +26,8 @@ ALDProjectile::ALDProjectile()
 	Mesh->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 
 	ProjectileMovement = CreateDefaultSubobject<UProjectileMovementComponent>(TEXT("ProjectileMovement"));
-	ProjectileMovement->InitialSpeed = 2000.f;
-	ProjectileMovement->MaxSpeed = 2000.f;
+	ProjectileMovement->InitialSpeed = 1500.f;
+	ProjectileMovement->MaxSpeed = 1500.f;
 	ProjectileMovement->bRotationFollowsVelocity = true;
 	ProjectileMovement->ProjectileGravityScale = 0.f;
 
@@ -36,7 +36,7 @@ ALDProjectile::ALDProjectile()
 	Collision->OnComponentBeginOverlap.AddDynamic(this, &ALDProjectile::TriggerEnter);
 	Collision->OnComponentEndOverlap.AddDynamic(this, &ALDProjectile::TriggerExit);
 
-	InitialLifeSpan = 5.0f;
+	InitialLifeSpan = 0.25f;
 
 	RootComponent = Collision;
 	Mesh->SetupAttachment(RootComponent);
