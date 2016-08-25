@@ -2,6 +2,7 @@
 
 #include "ALittleDeath.h"
 #include "Environment/LDArena.h"
+#include "Environment/LDArchitecture.h"
 #include "Player/LDBasePawn.h"
 #include "Player/LDPlayerPawn.h"
 #include "Player/LDPlagueCarrierPawn.h"
@@ -61,21 +62,30 @@ void ALDTile::TriggerEnter(class UPrimitiveComponent* HitComp, class AActor* Oth
 		BasePawn->UpdateCurrentTile(this);
 	}
 
-	ALDPlagueCarrierPawn* PlagueCarrierPawn = Cast<ALDPlagueCarrierPawn>(OtherActor);
-	if (PlagueCarrierPawn)
+	if (!bTileBlocked)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("TILE %s MADE DAMAGING BY PLAYER %s"), *this->GetName(), *PlagueCarrierPawn->GetName())
-		this->SetTileDamaging(true);
+		ALDPlagueCarrierPawn* PlagueCarrierPawn = Cast<ALDPlagueCarrierPawn>(OtherActor);
+		if (PlagueCarrierPawn)
+		{
+			UE_LOG(LogTemp, Warning, TEXT("TILE %s MADE DAMAGING BY PLAYER %s"), *this->GetName(), *PlagueCarrierPawn->GetName())
+				this->SetTileDamaging(true);
+		}
+
+		ALDPlayerPawn* PlayerPawn = Cast<ALDPlayerPawn>(OtherActor);
+		if (PlayerPawn)
+		{
+			if (bTileDamaging)
+			{
+				UE_LOG(LogTemp, Warning, TEXT("TILE %s DESTROYING PLAYER %s"), *this->GetName(), *PlayerPawn->GetName())
+					PlayerPawn->Destroy();
+			}
+		}
 	}
 
-	ALDPlayerPawn* PlayerPawn = Cast<ALDPlayerPawn>(OtherActor);
-	if (PlayerPawn)
+	ALDArchitecture* Architecture = Cast<ALDArchitecture>(OtherActor);
+	if (Architecture)
 	{
-		if (bTileDamaging)
-		{
-			UE_LOG(LogTemp, Warning, TEXT("TILE %s DESTROYING PLAYER %s"), *this->GetName(), *PlayerPawn->GetName())
-			PlayerPawn->Destroy();
-		}
+		this->bTileBlocked = true;
 	}
 }
 

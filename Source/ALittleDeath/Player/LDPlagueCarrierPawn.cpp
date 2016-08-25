@@ -42,7 +42,7 @@ void ALDPlagueCarrierPawn::ChooseNewTarget()
 	TArray<ALDTile*> CandidateTiles;
 	for (ALDTile* Tile : CurrentTile->GetAdjacentTiles())
 	{
-		if (!Tile->bTileDamaging)
+		if (!(Tile->bTileDamaging || Tile->bTileBlocked))
 		{
 			CandidateTiles.Add(Tile);
 		}

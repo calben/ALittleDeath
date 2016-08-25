@@ -40,6 +40,9 @@ public:
 		bool bTileDamaging;
 
 	UPROPERTY(EditAnywhere)
+		bool bTileBlocked;
+
+	UPROPERTY(EditAnywhere)
 		class ALDArena* Arena;
 
 	UPROPERTY(EditAnywhere)
