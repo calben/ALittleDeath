@@ -66,5 +66,7 @@ public:
 
 	virtual void DoPrimaryAction();
 
+	virtual void EndPrimaryAction();
+
 	virtual void Die();
 };

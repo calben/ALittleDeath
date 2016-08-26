@@ -6,6 +6,7 @@
 #include "Player/LDBasePawn.h"
 #include "Player/LDPlayerPawn.h"
 #include "Player/LDPlagueCarrierPawn.h"
+#include "Actors/CleanerSpace.h"
 #include "LDTile.h"
 
 
@@ -79,6 +80,13 @@ void ALDTile::TriggerEnter(class UPrimitiveComponent* HitComp, class AActor* Oth
 				UE_LOG(LogTemp, Warning, TEXT("TILE %s DESTROYING PLAYER %s"), *this->GetName(), *PlayerPawn->GetName())
 					PlayerPawn->Destroy();
 			}
+		}
+
+		ACleanerSpace* CleanerSpace = Cast<ACleanerSpace>(OtherActor);
+		if (CleanerSpace)
+		{
+			UE_LOG(LogTemp, Warning, TEXT("TILE %s IS BEING CLEANED"), *this->GetName())
+				CleanerSpace->ContactedTiles.Add(this);
 		}
 	}
 

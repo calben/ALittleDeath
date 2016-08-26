@@ -11,6 +11,14 @@ void ALDPlayerPawn::Tick(float DeltaTime)
 
 void ALDPlayerPawn::DoPrimaryAction()
 {
-	ACleanerSpace* CleanerSpace = GetWorld()->Spawn<CleanerSpace>(GetActorLocation(), FRotator::ZeroRotator);
+	FVector SpawnLocation = GetActorLocation() + GetActorForwardVector() * 100.f;
+	SpawnLocation.Z = 50.f;
+	ACleanerSpace* CleanerSpace = GetWorld()->SpawnActor<ACleanerSpace>(SpawnLocation, FRotator(0, 0, 0));
+	this->CleanerSpace = CleanerSpace;
+}
+
+void ALDPlayerPawn::EndPrimaryAction()
+{
+
 }
 
