@@ -112,7 +112,7 @@ void ALDTile::SetTileDamaging(bool ShouldDamage, float DPS)
 	}
 	else
 	{
-		this->Mesh->SetMaterial(0, nullptr);
+		this->Mesh->SetMaterial(0, this->DefaultMaterial);
 		this->bTileDamaging = false;
 		this->TileDamagePerSecond = DPS;
 	}

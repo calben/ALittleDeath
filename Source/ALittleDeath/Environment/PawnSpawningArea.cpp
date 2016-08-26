@@ -10,7 +10,7 @@
 // Sets default values
 APawnSpawningArea::APawnSpawningArea()
 {
- 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
+	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
 	Box = CreateDefaultSubobject<UBoxComponent>(TEXT("Box"));
@@ -20,13 +20,13 @@ APawnSpawningArea::APawnSpawningArea()
 void APawnSpawningArea::BeginPlay()
 {
 	Super::BeginPlay();
-	
+
 }
 
 // Called every frame
-void APawnSpawningArea::Tick( float DeltaTime )
+void APawnSpawningArea::Tick(float DeltaTime)
 {
-	Super::Tick( DeltaTime );
+	Super::Tick(DeltaTime);
 	if (SpawnedPawns.Num() < MaximumPawnCount)
 	{
 		if (tmp_timer >= SpawnDelay)
@@ -38,8 +38,12 @@ void APawnSpawningArea::Tick( float DeltaTime )
 			SpawnLocation.Z = 50.0f;
 			bool location_good = true;
 			for (FConstPlayerControllerIterator Iterator = GetWorld()->GetPlayerControllerIterator(); Iterator; ++Iterator)
-				if (FVector::Dist(SpawnLocation, Iterator->Get()->GetControlledPawn()->GetActorLocation()) < 300.0f)
-					location_good = false;
+			{
+				APawn* Pawn = Iterator->Get()->GetControlledPawn();
+				if (Pawn)
+					if (FVector::Dist(SpawnLocation, Pawn->GetActorLocation()) < 300.0f)
+						location_good = false;
+			}
 			if (location_good)
 			{
 				ALDBasePawn* BasePawn = GetWorld()->SpawnActor<ALDBasePawn>(Pawn, SpawnLocation, FRotator(0, 0, 0));
