@@ -33,13 +33,10 @@ public:
 		class UCameraComponent* Camera;
 
 	UPROPERTY(EditAnywhere)
-		class UPointLightComponent* Light;
-
-	UPROPERTY(EditAnywhere)
 		UArrowComponent* Arrow;
 
 	UPROPERTY(EditAnywhere)
-		float MoveSpeed = 250.0f;
+		float MoveSpeed = 300.0f;
 
 	UPROPERTY(EditAnywhere)
 		class ALDTile* LastTileHovered;

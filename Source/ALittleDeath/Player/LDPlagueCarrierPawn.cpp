@@ -36,6 +36,7 @@ void ALDPlagueCarrierPawn::Tick(float DeltaTime)
 	}
 }
 
+
 void ALDPlagueCarrierPawn::ChooseNewTarget()
 {
 	UE_LOG(LogTemp, Warning, TEXT("CHOOSING NEW TARGET"));
@@ -54,6 +55,7 @@ void ALDPlagueCarrierPawn::ChooseNewTarget()
 	}
 	TargetTile = CandidateTiles[FMath::FloorToInt(FMath::FRandRange(0, CandidateTiles.Num()))];
 }
+
 
 void ALDPlagueCarrierPawn::Die()
 {

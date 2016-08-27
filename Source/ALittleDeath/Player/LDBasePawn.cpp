@@ -13,10 +13,6 @@ ALDBasePawn::ALDBasePawn()
 	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
-	Light = CreateDefaultSubobject<UPointLightComponent>(TEXT("Light"));
-	Light->SetIntensity(1000.f);
-	Light->SetLightColor(FLinearColor::FLinearColor(160.f, 250.f, 160.f), true);
-
 	Mesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Mesh"));
 	const ConstructorHelpers::FObjectFinder<UStaticMesh> MeshObj(TEXT("/Game/StarterContent/Shapes/Shape_Cube"));
 	const ConstructorHelpers::FObjectFinder<UMaterialInterface> MaterialObj(TEXT("/Game/Materials/BasePlayerMaterial"));
@@ -44,7 +40,6 @@ ALDBasePawn::ALDBasePawn()
 	Arrow->SetRelativeLocation(FVector::FVector(25.f, 0.f, 0.f));
 
 	RootComponent = Mesh;
-	Light->SetupAttachment(Mesh);
 	SpringArm->SetupAttachment(RootComponent);
 	Camera->SetupAttachment(SpringArm, USpringArmComponent::SocketName);
 }
