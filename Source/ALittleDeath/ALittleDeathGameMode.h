@@ -15,5 +15,5 @@ class ALITTLEDEATH_API AALittleDeathGameMode : public AGameMode
 
 		AALittleDeathGameMode();
 	
-	
+	virtual void BeginPlay() override;
 };

@@ -51,9 +51,23 @@ public:
 		class APawnSpawningArea* SpawnPoint = nullptr;
 
 	UPROPERTY(EditAnywhere)
-		float ActionDelay = .2f;
+		float AttackActionDelay = .2f;
 
-	float tmp_actiontimer;
+	UPROPERTY(EditAnywhere)
+		float PrimaryActionDelay = 1.f;
+
+	UPROPERTY(EditAnywhere)
+		float SecondaryActionDelay = 1.f;
+
+	UPROPERTY(EditAnywhere)
+		FVector LookDirection;
+
+	UPROPERTY(EditAnywhere)
+		FVector MoveDirection;
+
+	float tmp_attack_action_timer;
+	float tmp_primary_action_timer;
+	float tmp_secondary_action_timer;
 
 	void UpdateCurrentTile(class ALDTile* Tile);
 
@@ -61,9 +75,11 @@ public:
 
 	void FireProjectileInDirection(FVector Direction);
 
+	virtual void DoAttackAction();
+
 	virtual void DoPrimaryAction();
 
-	virtual void EndPrimaryAction();
+	virtual void DoSecondaryAction();
 
 	virtual void Die();
 };

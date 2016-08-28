@@ -19,7 +19,7 @@ ACleanerSpace::ACleanerSpace()
 		Mesh->SetStaticMesh(MeshObj.Object);
 		Mesh->SetMaterial(0, MaterialObj.Object);
 	}
-	Mesh->SetRelativeScale3D(FVector(1.f, 1.f, 0.3f));
+	Mesh->SetRelativeScale3D(FVector(1.5f, 1.5f, 0.1f));
 	Mesh->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
 	Mesh->SetSimulatePhysics(false);
 	RootComponent = Mesh;

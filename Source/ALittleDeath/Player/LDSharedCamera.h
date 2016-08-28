@@ -3,18 +3,16 @@
 #pragma once
 
 #include "GameFramework/Actor.h"
-#include "Actors/ArenaWall.h"
-#include "Actors/ArenaTile.h"
-#include "Arena.generated.h"
+#include "LDSharedCamera.generated.h"
 
 UCLASS()
-class ALITTLEDEATH_API AArena : public AActor
+class ALITTLEDEATH_API ALDSharedCamera : public AActor
 {
 	GENERATED_BODY()
 	
 public:	
 	// Sets default values for this actor's properties
-	AArena();
+	ALDSharedCamera();
 
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -23,16 +21,12 @@ public:
 	virtual void Tick( float DeltaSeconds ) override;
 
 	UPROPERTY(EditAnywhere)
-		UStaticMeshComponent* Floor;
+		class USpringArmComponent* SpringArm;
 
 	UPROPERTY(EditAnywhere)
-		TArray<AArenaWall*> Walls;
+		class UCameraComponent* Camera;
 
 	UPROPERTY(EditAnywhere)
-		TArray<AArenaTile*> Tiles;
+		TArray<APawn*> WatchedPlayers;
 	
-	void SpawnArenaBoundaries();
-
-	void SpawnArenaTiles();
-
 };

@@ -11,14 +11,13 @@ void ALDPlayerPawn::Tick(float DeltaTime)
 
 void ALDPlayerPawn::DoPrimaryAction()
 {
-	FVector SpawnLocation = GetActorLocation() + GetActorForwardVector() * 100.f;
-	SpawnLocation.Z = 50.f;
-	ACleanerSpace* CleanerSpace = GetWorld()->SpawnActor<ACleanerSpace>(SpawnLocation, FRotator(0, 0, 0));
-	this->CleanerSpace = CleanerSpace;
-}
-
-void ALDPlayerPawn::EndPrimaryAction()
-{
-
+	if (LookDirection.SizeSquared() > 0.1f && tmp_primary_action_timer >= PrimaryActionDelay)
+	{
+		FVector SpawnLocation = GetActorLocation() + LookDirection * 175.f;
+		SpawnLocation.Z = 50.f;
+		ACleanerSpace* CleanerSpace = GetWorld()->SpawnActor<ACleanerSpace>(SpawnLocation, FRotator(0, 0, 0));
+		this->CleanerSpace = CleanerSpace;
+		tmp_primary_action_timer = 0.f;
+	}
 }
 

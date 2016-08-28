@@ -18,7 +18,5 @@ class ALITTLEDEATH_API ALDPlayerPawn : public ALDBasePawn
 
 	virtual void DoPrimaryAction() override;
 	
-	virtual void EndPrimaryAction() override;
-
 	virtual void Tick(float DeltaTime) override;
 };

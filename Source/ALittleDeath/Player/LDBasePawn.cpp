@@ -57,17 +57,16 @@ void ALDBasePawn::Tick(float DeltaTime)
 	const float MoveForwardValue = GetInputAxisValue("MoveForward");
 	const float MoveRightValue = GetInputAxisValue("MoveRight");
 
-	const FVector MoveDirection = FVector(MoveForwardValue, MoveRightValue, 0.f).GetClampedToMaxSize(1.0f);
+	MoveDirection = FVector(MoveForwardValue, MoveRightValue, 0.f).GetClampedToMaxSize(1.0f);
 	MoveInDirection(MoveDirection, DeltaTime);
 
 	const float LookForwardValue = GetInputAxisValue("LookForward");
 	const float LookRightValue = GetInputAxisValue("LookRight");
-	const FVector LookDirection = FVector(LookForwardValue, LookRightValue, 0.f).GetClampedToMaxSize(1.0f);
-	if (LookDirection.SizeSquared() > 0.1f && tmp_actiontimer >= ActionDelay) {
-		FireProjectileInDirection(LookDirection/LookDirection.Size());
-		tmp_actiontimer = 0.f;
-	}
-	tmp_actiontimer += DeltaTime;
+	LookDirection = FVector(LookForwardValue, LookRightValue, 0.f).GetClampedToMaxSize(1.0f);
+
+	tmp_attack_action_timer += DeltaTime;
+	tmp_primary_action_timer += DeltaTime;
+	tmp_secondary_action_timer += DeltaTime;
 }
 
 void ALDBasePawn::MoveInDirection(FVector Direction, float DeltaTime)
@@ -105,15 +104,28 @@ void ALDBasePawn::Die()
 	this->Destroy();
 }
 
+
+void ALDBasePawn::DoAttackAction()
+{
+	if (LookDirection.SizeSquared() > 0.1f && tmp_attack_action_timer >= AttackActionDelay)
+	{
+		FireProjectileInDirection(LookDirection / LookDirection.Size());
+		tmp_attack_action_timer = 0.f;
+	}
+
+}
+
+
 void ALDBasePawn::DoPrimaryAction()
 {
-
 }
 
-void ALDBasePawn::EndPrimaryAction()
+
+void ALDBasePawn::DoSecondaryAction()
 {
 
 }
+
 
 // Called to bind functionality to input
 void ALDBasePawn::SetupPlayerInputComponent(class UInputComponent* InputComponent)
@@ -124,5 +136,7 @@ void ALDBasePawn::SetupPlayerInputComponent(class UInputComponent* InputComponen
 	InputComponent->BindAxis("LookForward");
 	InputComponent->BindAxis("LookRight");
 	InputComponent->BindAction("PrimaryAction", IE_Pressed, this, &ALDBasePawn::DoPrimaryAction);
+	InputComponent->BindAction("SecondaryAction", IE_Pressed, this, &ALDBasePawn::DoSecondaryAction);
+	InputComponent->BindAction("AttackAction", IE_Pressed, this, &ALDBasePawn::DoAttackAction);
 }
 
