@@ -65,6 +65,9 @@ public:
 	UPROPERTY(EditAnywhere)
 		FVector MoveDirection;
 
+	UPROPERTY(EditAnywhere)
+		class ALDSharedCamera* SharedCamera;
+
 	float tmp_attack_action_timer;
 	float tmp_primary_action_timer;
 	float tmp_secondary_action_timer;

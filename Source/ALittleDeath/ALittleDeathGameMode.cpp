@@ -1,6 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "ALittleDeath.h"
+#include "Player/LDBasePawn.h"
 #include "Player/LDPlayerPawn.h"
 #include "Player/LDSharedCamera.h"
 #include "ALittleDeathGameMode.h"
@@ -26,8 +27,15 @@ void AALittleDeathGameMode::BeginPlay()
 			else
 			{
 				UE_LOG(LogTemp, Warning, TEXT("DETECTED LOCAL CONTROLLER %s"), *Controller->GetName());
-				if(SharedCamera)
+				if (SharedCamera)
+				{
 					SharedCamera->WatchedPlayers.Add(Controller->GetPawn());
+					ALDBasePawn* LDBasePawn = Cast<ALDBasePawn>(Controller->GetPawn());
+					if (LDBasePawn)
+					{
+						LDBasePawn->SharedCamera = SharedCamera;
+					}
+				}
 			}
 		}
 	}

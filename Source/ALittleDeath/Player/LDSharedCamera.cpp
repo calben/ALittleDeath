@@ -13,8 +13,8 @@ ALDSharedCamera::ALDSharedCamera()
 	SpringArm = CreateDefaultSubobject<USpringArmComponent>(TEXT("SpringArm"));
 	SpringArm->bDoCollisionTest = true;
 	SpringArm->bAbsoluteRotation = true;
-	SpringArm->RelativeRotation = FRotator(-80.f, 0.f, 0.f);
-	SpringArm->TargetArmLength = 800.f;
+	SpringArm->RelativeRotation = FRotator(-90.f, 0.f, 0.f);
+	SpringArm->TargetArmLength = 400.f;
 
 	Camera = CreateDefaultSubobject<UCameraComponent>(TEXT("Camera"));
 	Camera->bUsePawnControlRotation = false;
@@ -35,13 +35,19 @@ void ALDSharedCamera::Tick( float DeltaTime )
 {
 	Super::Tick( DeltaTime );
 	FVector tmp;
-	for (APawn* Pawn : WatchedPlayers)
+	if (WatchedPlayers.Num() > 0)
 	{
-		if(Pawn)
-			tmp += Pawn->GetActorLocation();
+		for (APawn* Pawn : WatchedPlayers)
+		{
+			if (Pawn)
+				tmp += Pawn->GetActorLocation();
+		}
+	}
+	else
+	{
+		tmp = FVector(0.f, 0.f, 0.f);
 	}
 	tmp /= WatchedPlayers.Num();
-	tmp.Z = 200.f;
+	tmp.Z = 400.f;
 	SetActorLocation(tmp);
 }
-

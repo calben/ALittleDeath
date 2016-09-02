@@ -3,6 +3,7 @@
 #include "ALittleDeath.h"
 #include "Environment/LDTile.h"
 #include "Actors/LDProjectile.h"
+#include "Player/LDSharedCamera.h"
 #include "Kismet/KismetMathLibrary.h"
 #include "LDBasePawn.h"
 
@@ -21,7 +22,7 @@ ALDBasePawn::ALDBasePawn()
 		Mesh->SetStaticMesh(MeshObj.Object);
 		Mesh->SetMaterial(0, MaterialObj.Object);
 	}
-	Mesh->SetRelativeScale3D(FVector::FVector(0.6f, 0.6f, 0.4f));
+	Mesh->SetRelativeScale3D(FVector::FVector(0.6f, 0.6f, 1.f));
 	Mesh->SetSimulatePhysics(true);
 	Mesh->SetLinearDamping(0.95f);
 	Mesh->SetEnableGravity(false);
@@ -30,7 +31,7 @@ ALDBasePawn::ALDBasePawn()
 	SpringArm = CreateDefaultSubobject<USpringArmComponent>(TEXT("SpringArm"));
 	SpringArm->bDoCollisionTest = true;
 	SpringArm->bAbsoluteRotation = true;
-	SpringArm->RelativeRotation = FRotator(-80.f, 0.f, 0.f);
+	SpringArm->RelativeRotation = FRotator(-90.f, 0.f, 0.f);
 	SpringArm->TargetArmLength = 800.f;
 
 	Camera = CreateDefaultSubobject<UCameraComponent>(TEXT("Camera"));
@@ -101,6 +102,10 @@ void ALDBasePawn::UpdateCurrentTile(class ALDTile* Tile)
 
 void ALDBasePawn::Die()
 {
+	if (SharedCamera)
+	{
+		SharedCamera->WatchedPlayers.Remove(this);
+	}
 	this->Destroy();
 }
 
